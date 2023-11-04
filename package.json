@@ -1,0 +1,17 @@
+{
+  "name": "user_auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev":"ts-node-dev --respawn --transpile-only src/index.ts",
+    "build":"tsc"
+  },
+  "keywords": [],
+  "author": "theabhipatel",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0"
+  }
+}
