@@ -88,7 +88,7 @@ export const handleForgetPasswordEmail: RequestHandler = async (
       { name: findUser.name, id: findUser._id },
       JWT_SECRET!,
       {
-        expiresIn: 60,
+        expiresIn: "2d",
       }
     );
 
@@ -110,10 +110,17 @@ export const handleForgetPassword: RequestHandler = async (req, res, next) => {
       return res
         .status(403)
         .json({ success: false, message: "Token not found." });
-    const userInfo = jwt.verify(token, JWT_SECRET!) as {
-      name: string;
-      id: string;
-    };
+    let userInfo;
+    try {
+      userInfo = jwt.verify(token, JWT_SECRET!) as {
+        name: string;
+        id: string;
+      };
+    } catch (error) {
+      return res
+        .status(422)
+        .json({ success: false, message: "Token has expired or invalid." });
+    }
 
     const findUser = await userModel.findById(userInfo.id);
     if (!findUser)
